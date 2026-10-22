@@ -1,3 +1,7 @@
+//---------------------------------------------------------
+// CANDIDATO: classe responsável representar um candidato
+//---------------------------------------------------------
+
 class Candidato {
   constructor(
     nome,
@@ -13,11 +17,11 @@ class Candidato {
     this.tempoExperiencia = tempoExperiencia;
   }
 
-  mostrarDetalhes() {
+  mostrarCandidato() {
     console.log(`===== Candidato(a): ${this.nome}\n`);
     console.log(`Nome completo: ${this.nome} ${this.sobrenome}.`);
     console.log(`Área de interesse: ${this.areaInteresse}`);
-    console.log(`Tempo de experiência: ${this.tempoExperiencia}\n`);
+    console.log(`Tempo de experiência: ${this.tempoExperiencia} anos\n`);
   }
 }
 
