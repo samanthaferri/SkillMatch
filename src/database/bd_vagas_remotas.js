@@ -29,10 +29,10 @@ const vagasRemotas = [
       "React",
       "API REST",
     ],
-    salario: 3600,
+    salario: 2300,
     areaVaga: "Front-end",
     equipamentoFornecido: false,
-    auxilioHomeOffice: 250,
+    auxilioHomeOffice: 0,
   },
   {
     cargo: "Desenvolvedor Front-end Vue Júnior",
@@ -49,7 +49,7 @@ const vagasRemotas = [
     salario: 3400,
     areaVaga: "Front-end",
     equipamentoFornecido: true,
-    auxilioHomeOffice: 200,
+    auxilioHomeOffice: 1500,
   },
 ];
 

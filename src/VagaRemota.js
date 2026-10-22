@@ -10,12 +10,21 @@ class VagaRemota extends Vaga {
     cargo,
     empresa,
     requisitos,
+    salario,
+    areaVaga,
     equipamentoFornecido,
     auxilioHomeOffice
   ) {
-    super(cargo, empresa, requisitos);
+    super(cargo, empresa, requisitos, salario, areaVaga);
     this.equipamentoFornecido = equipamentoFornecido;
     this.auxilioHomeOffice = auxilioHomeOffice;
+  }
+
+  mostrarVaga() {
+    super.mostrarVaga();
+    console.log(`Modo de trabalho: Remoto`);
+    console.log(`Fornece equipamento: ${this.empresa}`);
+    console.log(`Auxílio home office: R$${this.auxilioHomeOffice}`);
   }
 }
 
