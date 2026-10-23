@@ -8,21 +8,32 @@ class Vaga {
     empresa,
     requisitos,
     salario,
-    areaVaga
+    areaVaga,
+    valeRefeicao
   ) {
     this.cargo = cargo;
     this.empresa = empresa;
     this.requisitos = requisitos;
-    this.salario = salario;
+    this.salario = Number(salario);
     this.areaVaga = areaVaga;
+    this.valeRefeicao = Number(valeRefeicao);
+  }
+
+  //cálculo da remuneração: salário e vale refeição
+  calcularRemuneracao() {
+    if (Number.isNaN(this.salario) || Number.isNaN(this.valeRefeicao)) {
+      return "Não foi possível calcular a remuneração total";
+    }
+    return this.salario + this.valeRefeicao;
   }
 
   //esse método vai mostrar os detalhes de uma vaga
   mostrarVaga() {
-    console.log(`===== Vaga: ${this.cargo} =====\n`);
-    console.log(`Empresa: ${this.empresa}`);
-    console.log(`Salário: R$${this.salario}`);
-    console.log(`Requisitos: ${this.requisitos.join(", ")}\n`);
+    console.log(`\n📌 Vaga de ${this.cargo}`);
+    console.log(`   ● Empresa: ${this.empresa}`);
+    console.log(`   ● Requisitos: ${this.requisitos.join(", ")}`);
+    console.log(`   ● Salário: R$${this.salario.toFixed(2)}`);
+    console.log(`   ● Vale refeição/alimentação: R$${this.valeRefeicao.toFixed(2)}`);
   }
 }
 
