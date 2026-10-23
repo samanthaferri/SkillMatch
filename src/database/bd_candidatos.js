@@ -4,7 +4,7 @@
 
 candidatos = [
   {
-    nome: "Samantha Manuela",
+    nome: "Samantha",
     sobrenome: "Ferri",
     areaInteresse: "Front-end",
     habilidades: [
