@@ -16,8 +16,9 @@ const vagasRemotas = [
     ],
     salario: 3500,
     areaVaga: "Front-end",
+    valeRefeicao: 0,
     equipamentoFornecido: true,
-    auxilioHomeOffice: 200,
+    auxilioHomeOffice: "duzentos reais",
   },
   {
     cargo: "Desenvolvedor Front-end Júnior - E-commerce",
@@ -31,6 +32,7 @@ const vagasRemotas = [
     ],
     salario: 2300,
     areaVaga: "Front-end",
+    valeRefeicao: 140,
     equipamentoFornecido: false,
     auxilioHomeOffice: 0,
   },
@@ -48,8 +50,9 @@ const vagasRemotas = [
     ],
     salario: 3400,
     areaVaga: "Front-end",
+    valeRefeicao: 1500,
     equipamentoFornecido: true,
-    auxilioHomeOffice: 1500,
+    auxilioHomeOffice: 980,
   },
 ];
 
