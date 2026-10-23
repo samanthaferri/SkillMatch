@@ -12,19 +12,24 @@ class VagaPresencial extends Vaga {
     requisitos,
     salario,
     areaVaga,
+    valeRefeicao,
     endereco,
     valeTransporte
   ) {
-    super(cargo, empresa, requisitos, salario, areaVaga);
+    super(cargo, empresa, requisitos, salario, areaVaga, valeRefeicao);
     this.endereco = endereco;
     this.valeTransporte = valeTransporte;
   }
 
   mostrarVaga() {
     super.mostrarVaga();
-    console.log(`Modo de trabalho: Presencial`);
-    console.log(`Endereço: ${this.endereco}`);
-    console.log(`Vale transporte: R$${this.valeTransporte}`);
+    const transporteFormatado = (this.valeTransporte = true ? "Possui" : "Não possui");
+    const remuneracaoTotalFormatada = this.formatarMoeda(this.calcularRemuneracao());
+
+    console.log(`   ● Modo de trabalho: Presencial`);
+    console.log(`   ● Endereço: ${this.endereco}`);
+    console.log(`   ● Vale transporte: ${transporteFormatado}`);
+    console.log(`   ● Remuneração total (com benefícios): ${remuneracaoTotalFormatada}`);
   }
 }
 
