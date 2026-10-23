@@ -24,11 +24,12 @@ class VagaPresencial extends Vaga {
   mostrarVaga() {
     super.mostrarVaga();
     const transporteFormatado = (this.valeTransporte = true ? "Possui" : "Não possui");
+    const remuneracaoTotalFormatada = this.formatarMoeda(this.calcularRemuneracao());
 
     console.log(`   ● Modo de trabalho: Presencial`);
     console.log(`   ● Endereço: ${this.endereco}`);
     console.log(`   ● Vale transporte: ${transporteFormatado}`);
-    console.log(`   ● Remuneração total (com benefícios): R$${this.calcularRemuneracao()}`);
+    console.log(`   ● Remuneração total (com benefícios): ${remuneracaoTotalFormatada}`);
   }
 }
 

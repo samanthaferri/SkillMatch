@@ -32,7 +32,7 @@ const vagasPresenciais = [
       "Figma",
       "Git",
     ],
-    salario: 3000,
+    salario: "3000",
     areaVaga: "front-end",
     valeRefeicao: 1000,
     endereco: "Florianópolis - SC",
