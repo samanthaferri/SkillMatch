@@ -18,7 +18,7 @@ const vagasRemotas = [
     areaVaga: "Front-end",
     valeRefeicao: 0,
     equipamentoFornecido: true,
-    auxilioHomeOffice: "duzentos reais",
+    auxilioHomeOffice: 200,
   },
   {
     cargo: "Desenvolvedor Front-end Júnior - E-commerce",

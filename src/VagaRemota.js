@@ -22,22 +22,30 @@ class VagaRemota extends Vaga {
   }
 
   calcularRemuneracao() {
+    //validar se os dois valores são números
     if (Number.isNaN(this.salario) || Number.isNaN(this.valeRefeicao) || Number.isNaN(this.auxilioHomeOffice)) {
       return "Não foi possível calcular a remuneração total";
     }
-    return this.salario + this.valeRefeicao + this.auxilioHomeOffice;
+
+    //validar se, apesar de serem números, são maiores do que zero
+    if (this.salario < 0 || this.valeRefeicao < 0 || this.auxilioHomeOffice < 0) {
+      return "Não foi possível calcular a remuneração total)";
+    }
+
+    //caso seja válido, retorna o cálculo normalmente
+    const remuneracaoTotal = (this.salario + this.valeRefeicao + this.auxilioHomeOffice).toFixed(2);
+    return remuneracaoTotal;
   }
 
   mostrarVaga() {
     super.mostrarVaga();
     const equipamentoFormatado = (this.equipamentoFornecido = true ? "Sim" : "Não");
-    const auxilioFormatado = this.auxilioHomeOffice > 0 ? `R$${this.auxilioHomeOffice.toFixed(2)}` : "Não possui";
-    const remuneracaoTotal = this.calcularRemuneracao().toFixed(2);
+    const auxilioFormatado = this.auxilioHomeOffice > 0 ? `R$${this.auxilioHomeOffice}` : "Não possui";
 
     console.log(`   ● Modo de trabalho: Remoto`);
     console.log(`   ● Auxílio home office: ${auxilioFormatado}`);
     console.log(`   ● Fornece equipamento: ${equipamentoFormatado}`);
-    console.log(`   ● Remuneração total (com benefícios): R$${remuneracaoTotal}`);
+    console.log(`   ● Remuneração total (com benefícios): R$${this.calcularRemuneracao()}`);
   }
 }
 
