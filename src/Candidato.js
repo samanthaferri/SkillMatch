@@ -18,11 +18,13 @@ class Candidato {
   }
 
   mostrarCandidato() {
+    const habilidadesFormatadas = this.habilidades.length > 0 ? `${this.habilidades.join(", ")}` : " - ";
+
     console.log(`👤 Candidato(a): ${this.nome}`);
     console.log(`Nome completo: ${this.nome} ${this.sobrenome}`);
     console.log(`Área de interesse: ${this.areaInteresse}`);
     console.log(`Tempo de experiência: ${this.tempoExperiencia} anos`);
-    console.log(`Habilidades: ${this.habilidades.join(", ")}\n`);
+    console.log(`Habilidades: ${habilidadesFormatadas}\n`);
   }
 }
 
