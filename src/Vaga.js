@@ -53,6 +53,33 @@ class Vaga {
     console.log(`   ● Salário: ${salarioFormatado}`);
     console.log(`   ● Vale refeição/alimentação: ${valeRefeicaoFormatado}`);
   }
+
+  compararCompatibilidade(candidato) {
+    const possui = [];
+    const naoPossui = [];
+
+    //percorrer a lista de requisitos da vaga
+    this.requisitos.forEach((requisito) => {
+      //procurar requisito nas habilidades do candidato
+      const requisitoAtendido = candidato.habilidades.find((habilidade) => {
+        //retornar quando requisito for encontrado na lista das habilidades
+        return habilidade.toLowerCase() === requisito.toLowerCase();
+      });
+
+      if (requisitoAtendido) {
+        possui.push(requisito);
+      } else {
+        naoPossui.push(requisito);
+      }
+    });
+
+    const possuiFormatado = possui.length > 0 ? possui.join(", ") : " - ";
+    const naoPossuiFormatado = naoPossui.length > 0 ? naoPossui.join(", ") : " - ";
+
+    console.log(`\n🎯 Comparando ${candidato.nome} com a vaga ${this.cargo}`);
+    console.log(`   Requisitos atendidos: ${possuiFormatado}`);
+    console.log(`   Requisitos faltando: ${naoPossuiFormatado}`);
+  }
 }
 
 module.exports = Vaga;
