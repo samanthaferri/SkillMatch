@@ -90,14 +90,16 @@ class Vaga {
 
     // Calcular o percentual com base na quantidade de requisitos atendidos
     if (totalRequisitosVaga > 0) {
-      compatibilidade.percentual = ((totalRequisitosAtendidos / totalRequisitosVaga) * 100).toFixed();
+      compatibilidade.percentual = Number((totalRequisitosAtendidos / totalRequisitosVaga) * 100).toFixed();
     } else {
-      // Se a vaga não tiver requisitos, manter o percentual em 100
-      compatibilidade.percentual = 100;
+      // Se a vaga não tiver requisitos, não é possível avaliar
+      compatibilidade.percentual = "Não avaliável";
     }
 
     // Classificar a compatibilidade conforme o percentual calculado
-    if (compatibilidade.percentual <= 49) {
+    if (compatibilidade.percentual === "Não avaliável") {
+      compatibilidade.classificacao = "Vaga sem requisitos";
+    } else if (compatibilidade.percentual <= 49) {
       compatibilidade.classificacao = "Baixa compatibilidade";
     } else if (compatibilidade.percentual <= 79) {
       compatibilidade.classificacao = "Média compatibilidade";
@@ -116,10 +118,10 @@ class Vaga {
       console.log(`   Requisitos atendidos: ${possuiFormatado}`);
       console.log(`   Requisitos faltando: ${naoPossuiFormatado}`);
       console.log(`   O candidato atende a ${totalRequisitosAtendidos}/${totalRequisitosVaga} requisitos da vaga!`);
+      console.log(`   RESULTADO: ${compatibilidade.classificacao} (${compatibilidade.percentual}%)\n`);
     } else {
-      console.log(`   A vaga não possui nenhum requisito cadastrado!`);
+      console.log(`   A vaga não possui requisitos e a classificação não pôde ser avaliada`);
     }
-    console.log(`   RESULTADO: ${compatibilidade.classificacao} (${compatibilidade.percentual}%)\n`);
 
     // Reunir todas as informações da comparação em um objeto
     const resultadoCompatibilidade = {
