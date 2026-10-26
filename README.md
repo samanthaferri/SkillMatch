@@ -203,6 +203,6 @@ O Git e o GitHub permitem registrar as alterações por meio de commits e trabal
 
 ## Vídeo de apresentação
 
-**Link:** Adicionar após a gravação.
+**Link:** https://youtu.be/eMBz7PfqY8c
 
 O vídeo apresenta o objetivo do SkillMatch, o funcionamento do programa, a organização do desenvolvimento e as principais decisões de implementação.
