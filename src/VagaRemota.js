@@ -3,7 +3,7 @@
 // Herda os atributos e métodos da classe Vaga
 //--------------------------------------------------------
 
-const Vaga = require("./vaga");
+const Vaga = require("./Vaga");
 
 class VagaRemota extends Vaga {
   constructor(
@@ -33,7 +33,7 @@ class VagaRemota extends Vaga {
 
     // Verificar se algum dos valores é negativo
     if (this.salario < 0 || this.valeRefeicao < 0 || this.auxilioHomeOffice < 0) {
-      return "Não foi possível calcular a remuneração total)";
+      return "Não foi possível calcular a remuneração total";
     }
 
     // Retornar a soma do salário com os benefícios
@@ -51,8 +51,12 @@ class VagaRemota extends Vaga {
     const auxilioFormatado =
       this.auxilioHomeOffice > 0 ? `${this.formatarMoeda(this.auxilioHomeOffice)}` : "Não possui";
 
-    // Formatar a remuneração total, incluindo os benefícios
-    const remuneracaoTotalFormatada = this.formatarMoeda(this.calcularRemuneracao());
+    // Calcular a remuneração total, incluindo os benefícios
+    const remuneracaoTotal = this.calcularRemuneracao();
+
+    // Verificar se o cálculo retornou um número ou uma mensagem de erro
+    const remuneracaoTotalFormatada =
+      typeof remuneracaoTotal === "number" ? this.formatarMoeda(remuneracaoTotal) : remuneracaoTotal;
 
     console.log(`   ● Modo de trabalho: Remoto`);
     console.log(`   ● Auxílio home office: ${auxilioFormatado}`);

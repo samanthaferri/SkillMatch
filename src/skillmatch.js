@@ -50,10 +50,47 @@ function bucarVagasPresenciais() {
       if (vagasPresenciais != null && vagasPresenciais.length > 0) {
         resolve(vagasPresenciais);
       } else {
-        reject("Nenhuma vaga remota encontrada!");
+        reject("Nenhuma vaga presencial encontrada!");
       }
     }, 1000);
   });
+}
+
+//-----------------------------------------------------------------------
+// ANÁLISE DE COMPATIBILIDADE
+//-----------------------------------------------------------------------
+
+// Comparar cada candidato com todas as vagas
+function analisarCompatibilidades(candidatos, vagas, aoComparar) {
+  // Percorrer a lista de candidatos
+  for (let i = 0; i < candidatos.length; i++) {
+    // Percorrer todas as vagas para cada candidato
+    for (let j = 0; j < vagas.length; j++) {
+      const resultado = vagas[j].compararCompatibilidade(candidatos[i]);
+
+      aoComparar(resultado); //callback
+    }
+  }
+}
+
+//-----------------------------------------------------------------------
+// CONTADOR DE COMPARAÇÕES
+//-----------------------------------------------------------------------
+
+// Criar um contador que mantém o total de comparações
+function criarContadorComparacoes() {
+  let total = 0;
+
+  return {
+    // Registrar uma nova comparação
+    registrar() {
+      total++;
+    },
+    // Consultar quantas comparações foram realizadas
+    consultar() {
+      return total;
+    },
+  };
 }
 
 //-----------------------------------------------------------------------
@@ -137,11 +174,19 @@ async function main() {
     // Comparar cada candidato com todas as vagas e guardar os resultados em um array
     const resultadoCompatibilidade = [];
 
-    listaCandidatos.forEach((candidato) => {
-      listaVagas.forEach((vaga) => {
-        resultadoCompatibilidade.push(vaga.compararCompatibilidade(candidato));
-      });
+    // Criar um contador para registrar as comparações realizadas
+    const contadorComparacoes = criarContadorComparacoes();
+
+    // Realizar as comparações utilizando a função com callback
+    analisarCompatibilidades(listaCandidatos, listaVagas, (resultado) => {
+      resultadoCompatibilidade.push(resultado);
+
+      // Registrar uma comparação realizada (closure)
+      contadorComparacoes.registrar();
     });
+
+    // Mostrar a quantidade total de comparações realizadas
+    console.log(`\n📊 Total de comparações realizadas: ${contadorComparacoes.consultar()}`);
 
     //-----------------------------------------------------------------------
     // ENCONTRAR AS VAGAS MAIS COMPATÍVEIS (RF06)
@@ -156,16 +201,19 @@ async function main() {
         return resultado.candidato === candidato && typeof resultado.compatibilidade.percentual === "number";
       });
 
-      // Percorrer os resultados e guardar o maior percentual encontrado
+      // Procurar a maior compatibilidade até encontrar 100% ou terminar a lista
       let maiorPercentual = 0;
+      let indice = 0;
 
-      resultadosCandidato.forEach((resultado) => {
-        const percentual = resultado.compatibilidade.percentual;
+      while (indice < resultadosCandidato.length && maiorPercentual < 100) {
+        const percentual = resultadosCandidato[indice].compatibilidade.percentual;
 
         if (percentual > maiorPercentual) {
           maiorPercentual = percentual;
         }
-      });
+
+        indice++;
+      }
 
       // Encontrar todas as vagas com o maior percentual, incluindo possíveis empates
       const melhoresVagas = resultadosCandidato.filter((resultado) => {
@@ -311,7 +359,7 @@ async function main() {
         return item.maiorCompatibilidade < 50;
       });
 
-      // Reunir os grupos e descartar aqueles que não possuem habilidades
+      // Remover grupos vazios para que a primeira prioridade disponível seja o foco principal
       const gruposPrioridade = [
         prioridadeAlta,
         prioridadeMedia,
@@ -320,14 +368,14 @@ async function main() {
         return grupo.length > 0;
       });
 
-      // Definir os títulos que serão exibidos no plano de estudos
+      // Os títulos indicam a ordem do plano de estudos, não as faixas de percentual
       const titulosPrioridade = [
         "🎯 FOCO PRINCIPAL",
         "📖 PRÓXIMOS PASSOS",
         "🌱 PARA IR ALÉM",
       ];
 
-      // Exibir somente os grupos que possuem recomendações
+      // Exibir apenas os grupos que possuem habilidades recomendadas
       gruposPrioridade.forEach((grupo, indice) => {
         console.log(`\n${titulosPrioridade[indice]}`);
 
