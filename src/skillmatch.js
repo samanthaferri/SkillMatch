@@ -203,8 +203,59 @@ async function main() {
     //-----------------------------------------------------------------------
     // RECOMENDAÇÕES DE ESTUDO (RF07)
     //-----------------------------------------------------------------------
+
+    console.log(`\n\n...................... Recomendações de estudo ......................\n`);
+
+    // Criar um plano de estudos para cada candidato
+    listaCandidatos.forEach((candidato) => {
+      // Buscar apenas os resultados avaliáveis do candidato atual
+      const resultadosCandidato = resultadoCompatibilidade.filter((resultado) => {
+        return resultado.candidato === candidato && typeof resultado.compatibilidade.percentual === "number";
+      });
+
+      // Verificar quantas vagas o candidato atende 100%
+      const vagasCompletas = resultadosCandidato.filter((vagaCompleta) => {
+        return vagaCompleta.compatibilidade.percentual === 100;
+      });
+
+      // Criar um array para guardar as habilidades recomendadas
+      const recomendacoes = [];
+
+      // Percorrer as vagas avaliadas do candidato
+      resultadosCandidato.forEach((resultado) => {
+        // Percorrer as habilidades que faltam em cada vaga
+        resultado.requisitosNaoAtendidos.forEach((habilidade) => {
+          // Verificar se a habilidade já está nas recomendações
+          let habilidadeEncontrada = recomendacoes.find((item) => {
+            return item.habilidade.toLowerCase() === habilidade.toLowerCase();
+          });
+
+          // Adicionar a habilidade somente se ainda não existir
+          if (!habilidadeEncontrada) {
+            // Criar um objeto para guardar a habilidade e as vagas que a exigem
+            habilidadeEncontrada = {
+              habilidade: habilidade,
+              vagas: [],
+            };
+
+            // Adicionar o objeto criado ao array de recomendações
+            recomendacoes.push(habilidadeEncontrada);
+          }
+
+          // Guardar a vaga relacionada à habilidade encontrada
+          habilidadeEncontrada.vagas.push({
+            cargo: resultado.vaga,
+            empresa: resultado.empresa,
+            percentual: resultado.compatibilidade.percentual,
+          });
+        });
+      });
+      console.log(`Recomendações para ${candidato.nome}:`);
+      console.log(recomendacoes);
+      //fim
+    });
   } catch (e) {
-    console.log("erro\n" + e);
+    console.log("Erro:\n" + e);
   }
 }
 
