@@ -13,6 +13,7 @@ const vagasPresenciais = require("./database/bd_vagas_presenciais");
 // BUSCA DOS DADOS
 //-----------------------------------------------------------------------
 
+// Simular a busca dos candidatos, com o setTimeout() para simular tempo de espera
 function buscarCandidatos() {
   return new Promise((resolve, reject) => {
     console.log("\n🔎 Buscando candidatos...\n");
@@ -27,8 +28,7 @@ function buscarCandidatos() {
   });
 }
 
-//-----------------------
-
+// Simular a busca das vagas remotas
 function bucarVagasRemotas() {
   return new Promise((resolve, reject) => {
     console.log("\n🔎 Buscando vagas remotas...\n");
@@ -42,8 +42,7 @@ function bucarVagasRemotas() {
   });
 }
 
-//-----------------------
-
+// Simular a busca das vagas presenciais
 function bucarVagasPresenciais() {
   return new Promise((resolve, reject) => {
     console.log("\n🔎 Buscando vagas presenciais...\n");
@@ -57,11 +56,13 @@ function bucarVagasPresenciais() {
   });
 }
 
-//-----------------------
+//-----------------------------------------------------------------------
+// EXECUÇÃO PRINCIPAL
+//-----------------------------------------------------------------------
 
 async function main() {
   try {
-    //Candidatos
+    // Buscar os candidatos e transformar cada objeto em uma instância da classe Candidato
     const candidatosResponse = await buscarCandidatos();
     const listaCandidatos = candidatosResponse.map(
       (candidatosObj) =>
@@ -74,7 +75,7 @@ async function main() {
         ),
     );
 
-    //Vagas remotas
+    // Buscar as vagas remotas e criar os objetos da classe VagaRemota
     const vagasRemotasResponse = await bucarVagasRemotas();
     const listaVagasRemotas = vagasRemotasResponse.map(
       (remotasObj) =>
@@ -90,7 +91,7 @@ async function main() {
         ),
     );
 
-    //Vagas presenciais
+    // Buscar as vagas presenciais e criar os objetos da classe VagaPresencial
     const vagasPresenciaisResponse = await bucarVagasPresenciais();
     const listaVagasPresenciais = vagasPresenciaisResponse.map(
       (presenciaisObj) =>
@@ -106,36 +107,49 @@ async function main() {
         ),
     );
 
-    //-----------------------
+    //-----------------------------------------------------------------------
+    // EXIBIR CANDIDATOS E VAGAS
+    //-----------------------------------------------------------------------
+
+    console.log(`\n\n...................... Candidatos (${listaCandidatos.length}) ......................\n`);
 
     //Mostrando todos os candidatos disponíveis
-    console.log(`\n\n...................... Candidatos (${listaCandidatos.length}) ......................\n`);
     listaCandidatos.forEach((candidato) => {
       candidato.mostrarCandidato();
     });
 
-    //-----------------------
-
-    //Concatenei as vagas presenciais com as remotas, assim tenho um array único de vagas
+    // Juntar as vagas presenciais e remotas em um único array
     const listaVagas = listaVagasPresenciais.concat(listaVagasRemotas);
 
-    //Mostrando todas as vagas disponíveis
     console.log(`\n...................... Vagas (${listaVagas.length}) ......................\n`);
+
+    // Mostrar todas as vagas disponíveis
     listaVagas.forEach((vaga) => {
       vaga.mostrarVaga();
     });
 
-    //-----------------------
+    //-----------------------------------------------------------------------
+    // CALCULAR COMPATIBILIDADE
+    //-----------------------------------------------------------------------
 
-    //Comparando compatibilidade
     console.log(`\n\n...................... Calculando compatibilidade ......................\n`);
 
+    // Comparar cada candidato com todas as vagas e guardar os resultados em um array
     const resultadoCompatibilidade = [];
+
     listaCandidatos.forEach((candidato) => {
       listaVagas.forEach((vaga) => {
         resultadoCompatibilidade.push(vaga.compararCompatibilidade(candidato));
       });
     });
+
+    //-----------------------------------------------------------------------
+    // ENCONTRAR AS VAGAS MAIS COMPATÍVEIS (RF06)
+    //-----------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------
+    // RECOMENDAÇÕES DE ESTUDO (RF07)
+    //-----------------------------------------------------------------------
   } catch (e) {
     console.log("erro\n" + e);
   }
