@@ -250,9 +250,49 @@ async function main() {
           });
         });
       });
-      console.log(`Recomendações para ${candidato.nome}:`);
-      console.log(recomendacoes);
-      //fim
+
+      // Descobrir a maior compatibilidade relacionada a cada habilidade
+      recomendacoes.forEach((recomendacao) => {
+        let maiorCompatibilidade = 0;
+
+        // Percorrer as vagas relacionadas à habilidade
+        recomendacao.vagas.forEach((vaga) => {
+          if (vaga.percentual > maiorCompatibilidade) {
+            maiorCompatibilidade = vaga.percentual;
+          }
+        });
+
+        // Guardar o maior percentual no objeto da recomendação
+        recomendacao.maiorCompatibilidade = maiorCompatibilidade;
+      });
+
+      // Ordenar pela maior compatibilidade e, em caso de empate, pela quantidade de vagas
+      recomendacoes.sort((a, b) => {
+        if (a.maiorCompatibilidade !== b.maiorCompatibilidade) {
+          return b.maiorCompatibilidade - a.maiorCompatibilidade;
+        }
+
+        // Em caso de empate, priorizar a habilidade exigida em mais vagas
+        return b.vagas.length - a.vagas.length;
+      });
+
+      //-----------------------------------------------------
+      // EXIBIR O PLANO DE ESTUDOS
+      //-----------------------------------------------------
+
+      // Mostrar o candidato e a quantidade de vagas avaliadas
+      console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      console.log(`📚 PLANO DE ESTUDOS — ${candidato.nome} ${candidato.sobrenome}`);
+      console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
+      console.log(`\n📊 Analisamos ${resultadosCandidato.length} vagas para o seu perfil.`);
+
+      // Mostrar uma mensagem se o candidato atender 100% de alguma vaga
+      if (vagasCompletas.length > 0) {
+        const textoVaga = vagasCompletas.length === 1 ? "vaga" : "vagas";
+
+        console.log(`✅ Você já atende 100% dos requisitos de ${vagasCompletas.length} ${textoVaga}!`);
+      }
     });
   } catch (e) {
     console.log("Erro:\n" + e);
