@@ -4,13 +4,14 @@
 
 const Candidato = require("./Candidato");
 const candidatos = require("./database/bd_candidatos");
-const Vaga = require("./vaga");
 const VagaRemota = require("./VagaRemota");
 const VagaPresencial = require("./VagaPresencial");
 const vagasRemotas = require("./database/bd_vagas_remotas");
 const vagasPresenciais = require("./database/bd_vagas_presenciais");
 
-//-----------------------
+//-----------------------------------------------------------------------
+// BUSCA DOS DADOS
+//-----------------------------------------------------------------------
 
 function buscarCandidatos() {
   return new Promise((resolve, reject) => {
@@ -129,9 +130,10 @@ async function main() {
     //Comparando compatibilidade
     console.log(`\n\n...................... Calculando compatibilidade ......................\n`);
 
+    const resultadoCompatibilidade = [];
     listaCandidatos.forEach((candidato) => {
       listaVagas.forEach((vaga) => {
-        vaga.compararCompatibilidade(candidato);
+        resultadoCompatibilidade.push(vaga.compararCompatibilidade(candidato));
       });
     });
   } catch (e) {

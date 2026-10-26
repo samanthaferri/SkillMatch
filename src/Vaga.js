@@ -95,7 +95,7 @@ class Vaga {
     }
 
     //Classificação da compatibilidade
-    if (compatibilidade.percentual <= 45) {
+    if (compatibilidade.percentual <= 49) {
       compatibilidade.classificacao = "Baixa compatibilidade";
     } else if (compatibilidade.percentual <= 79) {
       compatibilidade.classificacao = "Média compatibilidade";
@@ -114,13 +114,23 @@ class Vaga {
       console.log(`   Requisitos atendidos: ${possuiFormatado}`);
       console.log(`   Requisitos faltando: ${naoPossuiFormatado}`);
       console.log(`   O candidato atende a ${totalRequisitosAtendidos}/${totalRequisitosVaga} requisitos da vaga!`);
+    } else {
+      console.log(`   A vaga não possui nenhum requisito cadastrado!`);
     }
     console.log(`   RESULTADO: ${compatibilidade.classificacao} (${compatibilidade.percentual}%)\n`);
 
-    /*     //Resultados da análise (retornar objeto)
+    //Resultados da análise (retornar objeto)
     const resultadoCompatibilidade = {
+      candidato: candidato,
+      vaga: this.cargo,
+      empresa: this.empresa,
+      requisitos: this.requisitos,
+      requisitosAtendidos: possui,
+      requisitosNaoAtendidos: naoPossui,
+      compatibilidade: compatibilidade,
+    };
 
-    } */
+    return resultadoCompatibilidade;
   }
 }
 
