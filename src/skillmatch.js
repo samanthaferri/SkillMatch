@@ -293,6 +293,56 @@ async function main() {
 
         console.log(`✅ Você já atende 100% dos requisitos de ${vagasCompletas.length} ${textoVaga}!`);
       }
+
+      // Separar as habilidades recomendadas por prioridade
+
+      // Alta prioridade: habilidades que faltam em vagas com compatibilidade de 80% ou mais
+      const prioridadeAlta = recomendacoes.filter((item) => {
+        return item.maiorCompatibilidade >= 80;
+      });
+
+      // Média prioridade: habilidades que faltam em vagas com compatibilidade de 50% a 79%
+      const prioridadeMedia = recomendacoes.filter((item) => {
+        return item.maiorCompatibilidade >= 50 && item.maiorCompatibilidade < 80;
+      });
+
+      // Complementar: habilidades que faltam em vagas com compatibilidade abaixo de 50%
+      const prioridadeComplementar = recomendacoes.filter((item) => {
+        return item.maiorCompatibilidade < 50;
+      });
+
+      // Reunir os grupos e descartar aqueles que não possuem habilidades
+      const gruposPrioridade = [
+        prioridadeAlta,
+        prioridadeMedia,
+        prioridadeComplementar,
+      ].filter((grupo) => {
+        return grupo.length > 0;
+      });
+
+      // Definir os títulos que serão exibidos no plano de estudos
+      const titulosPrioridade = [
+        "🎯 FOCO PRINCIPAL",
+        "📖 PRÓXIMOS PASSOS",
+        "🌱 PARA IR ALÉM",
+      ];
+
+      // Exibir somente os grupos que possuem recomendações
+      gruposPrioridade.forEach((grupo, indice) => {
+        console.log(`\n${titulosPrioridade[indice]}`);
+
+        // Exibir as habilidades de cada grupo
+        grupo.forEach((item) => {
+          console.log(`   • ${item.habilidade}`);
+        });
+      });
+
+      // Tratar situações em que não existem recomendações de estudo
+      if (resultadosCandidato.length === 0) {
+        console.log("\n⚠️ Não há vagas com requisitos avaliáveis para gerar recomendações.");
+      } else if (recomendacoes.length === 0) {
+        console.log("\n🎉 Parabéns! Você já possui todas as habilidades exigidas pelas vagas avaliadas!");
+      }
     });
   } catch (e) {
     console.log("Erro:\n" + e);

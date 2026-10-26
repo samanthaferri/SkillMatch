@@ -24,11 +24,11 @@ const vagasRemotas = [
     cargo: "Desenvolvedor Front-end Júnior - E-commerce",
     empresa: "WeCode",
     requisitos: [
-      "HTML",
+      /*       "HTML",
       "CSS",
       "JavaScript",
       "React",
-      "API REST",
+      "API REST", */
     ],
     salario: 2300,
     areaVaga: "Front-end",
