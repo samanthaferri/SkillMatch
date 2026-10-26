@@ -21,10 +21,11 @@ class Vaga {
 
   // Formatar valores em reais, com duas casas decimais
   formatarMoeda(valor, minimo = 0) {
-    // garantir que seja um número maior que um valor mínimo
+    // Garantir que seja um número válido e respeite o valor mínimo
     if (typeof valor !== "number" || Number.isNaN(valor) || valor < minimo) {
-      return `Valor inválido`;
+      return "Valor inválido";
     }
+
     return `R$${valor.toFixed(2).replace(".", ",")}`;
   }
 
@@ -37,7 +38,7 @@ class Vaga {
 
     // Verificar se algum dos valores é negativo
     if (this.salario < 0 || this.valeRefeicao < 0) {
-      return "Não foi possível calcular a remuneração)";
+      return "Não foi possível calcular a remuneração";
     }
 
     // Retornar a soma dos valores
@@ -46,7 +47,7 @@ class Vaga {
 
   // Mostrar as informações da vaga no terminal
   mostrarVaga() {
-    const requisitosFormatado = this.requisitos.length > 0 ? `${this.requisitos.join(", ")}` : " - ";
+    const requisitosFormatado = this.requisitos.length > 0 ? this.requisitos.join(", ") : " - ";
     const salarioFormatado = this.formatarMoeda(this.salario);
     const valeRefeicaoFormatado = this.formatarMoeda(this.valeRefeicao);
 
@@ -66,7 +67,6 @@ class Vaga {
     this.requisitos.forEach((requisito) => {
       // Procurar o requisito nas habilidades do candidato, ignorando maiúsculas e minúsculas
       const requisitoAtendido = candidato.habilidades.find((habilidade) => {
-        //retornar quando requisito for encontrado na lista das habilidades
         return habilidade.toLowerCase() === requisito.toLowerCase();
       });
 
@@ -90,7 +90,7 @@ class Vaga {
 
     // Calcular o percentual com base na quantidade de requisitos atendidos
     if (totalRequisitosVaga > 0) {
-      compatibilidade.percentual = Number((totalRequisitosAtendidos / totalRequisitosVaga) * 100).toFixed();
+      compatibilidade.percentual = Number(((totalRequisitosAtendidos / totalRequisitosVaga) * 100).toFixed());
     } else {
       // Se a vaga não tiver requisitos, não é possível avaliar
       compatibilidade.percentual = "Não avaliável";
@@ -112,7 +112,7 @@ class Vaga {
     const naoPossuiFormatado = naoPossui.length > 0 ? naoPossui.join(", ") : " - ";
 
     // Mostrar o resultado da comparação entre o candidato e a vaga
-    console.log(`\n🎯 CANDIDATO: ${candidato.nome} ${candidato.sobrenome} | VAGA: ${this.cargo} `);
+    console.log(`\n🎯 CANDIDATO: ${candidato.nome} ${candidato.sobrenome} | VAGA: ${this.cargo}`);
 
     if (totalRequisitosVaga > 0) {
       console.log(`   Requisitos atendidos: ${possuiFormatado}`);
@@ -120,7 +120,7 @@ class Vaga {
       console.log(`   O candidato atende a ${totalRequisitosAtendidos}/${totalRequisitosVaga} requisitos da vaga!`);
       console.log(`   RESULTADO: ${compatibilidade.classificacao} (${compatibilidade.percentual}%)\n`);
     } else {
-      console.log(`   A vaga não possui requisitos e a classificação não pôde ser avaliada`);
+      console.log(`   A vaga não possui requisitos e a compatibilidade não pôde ser avaliada.\n`);
     }
 
     // Reunir todas as informações da comparação em um objeto

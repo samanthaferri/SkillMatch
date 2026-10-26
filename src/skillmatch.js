@@ -147,6 +147,59 @@ async function main() {
     // ENCONTRAR AS VAGAS MAIS COMPATÍVEIS (RF06)
     //-----------------------------------------------------------------------
 
+    console.log(`\n\n...................... Vagas mais compatíveis ......................\n`);
+
+    // Analisar os resultados de cada candidato separadamente
+    listaCandidatos.forEach((candidato) => {
+      // Filtrar apenas os resultados do candidato que possuem percentual numérico
+      const resultadosCandidato = resultadoCompatibilidade.filter((resultado) => {
+        return resultado.candidato === candidato && typeof resultado.compatibilidade.percentual === "number";
+      });
+
+      // Percorrer os resultados e guardar o maior percentual encontrado
+      let maiorPercentual = 0;
+
+      resultadosCandidato.forEach((resultado) => {
+        const percentual = resultado.compatibilidade.percentual;
+
+        if (percentual > maiorPercentual) {
+          maiorPercentual = percentual;
+        }
+      });
+
+      // Encontrar todas as vagas com o maior percentual, incluindo possíveis empates
+      const melhoresVagas = resultadosCandidato.filter((resultado) => {
+        return resultado.compatibilidade.percentual === maiorPercentual;
+      });
+
+      // Mostrar as vagas mais compatíveis para o candidato
+      console.log(`\n🏆 Melhores vagas para ${candidato.nome} ${candidato.sobrenome}:`);
+
+      if (melhoresVagas.length > 0) {
+        melhoresVagas.forEach((resultado) => {
+          console.log(`● ${resultado.vaga} (${resultado.compatibilidade.percentual}% de compatibilidade)`);
+          console.log(`  Empresa: ${resultado.empresa}`);
+        });
+      } else {
+        console.log("  Nenhuma vaga pôde ser avaliada.");
+      }
+
+      // Encontrar as vagas que não possuem requisitos cadastrados
+      const vagasNaoAvaliaveis = resultadoCompatibilidade.filter((resultado) => {
+        return resultado.candidato === candidato && resultado.compatibilidade.percentual === "Não avaliável";
+      });
+
+      // Mostrar as vagas não avaliáveis separadamente
+      if (vagasNaoAvaliaveis.length > 0) {
+        console.log(`\n❌ Vagas não avaliáveis ${candidato.nome} ${candidato.sobrenome}:`);
+
+        vagasNaoAvaliaveis.forEach((resultado) => {
+          console.log(`● ${resultado.vaga} (Sem requisitos cadastrados)`);
+          console.log(`  Empresa: ${resultado.empresa}`);
+        });
+      }
+    });
+
     //-----------------------------------------------------------------------
     // RECOMENDAÇÕES DE ESTUDO (RF07)
     //-----------------------------------------------------------------------
