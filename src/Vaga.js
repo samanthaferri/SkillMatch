@@ -88,11 +88,11 @@ class Vaga {
       classificacao: "",
     };
 
-    // Calcular o percentual com base na quantidade de requisitos atendidos
+    // Calcular e arredondar o percentual de requisitos atendidos
     if (totalRequisitosVaga > 0) {
       compatibilidade.percentual = Number(((totalRequisitosAtendidos / totalRequisitosVaga) * 100).toFixed());
     } else {
-      // Se a vaga não tiver requisitos, não é possível avaliar
+      // Sem requisitos, marcar a vaga como não avaliável para evitar dividir por zero
       compatibilidade.percentual = "Não avaliável";
     }
 

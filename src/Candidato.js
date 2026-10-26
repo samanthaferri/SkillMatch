@@ -1,6 +1,6 @@
-//---------------------------------------------------------
-// CANDIDATO: classe responsável representar um candidato
-//---------------------------------------------------------
+//--------------------------------------------------------------
+// CANDIDATO: classe responsável por representar um candidato
+//--------------------------------------------------------------
 
 class Candidato {
   constructor(

@@ -50,7 +50,7 @@ function bucarVagasPresenciais() {
       if (vagasPresenciais != null && vagasPresenciais.length > 0) {
         resolve(vagasPresenciais);
       } else {
-        reject("Nenhuma vaga remota encontrada!");
+        reject("Nenhuma vaga presencial encontrada!");
       }
     }, 1000);
   });
@@ -311,7 +311,7 @@ async function main() {
         return item.maiorCompatibilidade < 50;
       });
 
-      // Reunir os grupos e descartar aqueles que não possuem habilidades
+      // Remover grupos vazios para que a primeira prioridade disponível seja o foco principal
       const gruposPrioridade = [
         prioridadeAlta,
         prioridadeMedia,
@@ -320,14 +320,14 @@ async function main() {
         return grupo.length > 0;
       });
 
-      // Definir os títulos que serão exibidos no plano de estudos
+      // Os títulos indicam a ordem do plano de estudos, não as faixas de percentual
       const titulosPrioridade = [
         "🎯 FOCO PRINCIPAL",
         "📖 PRÓXIMOS PASSOS",
         "🌱 PARA IR ALÉM",
       ];
 
-      // Exibir somente os grupos que possuem recomendações
+      // Exibir apenas os grupos que possuem habilidades recomendadas
       gruposPrioridade.forEach((grupo, indice) => {
         console.log(`\n${titulosPrioridade[indice]}`);
 

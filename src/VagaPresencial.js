@@ -3,7 +3,7 @@
 // Herda os atributos e métodos da classe Vaga
 //--------------------------------------------------------------
 
-const Vaga = require("./vaga");
+const Vaga = require("./Vaga");
 
 class VagaPresencial extends Vaga {
   constructor(
