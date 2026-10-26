@@ -2,7 +2,7 @@
 // CANDIDATOS: banco de dados de candidatos
 //-------------------------------------------
 
-candidatos = [
+const candidatos = [
   {
     nome: "Samantha",
     sobrenome: "Ferri",
