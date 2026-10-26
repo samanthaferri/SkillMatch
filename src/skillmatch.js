@@ -4,13 +4,14 @@
 
 const Candidato = require("./Candidato");
 const candidatos = require("./database/bd_candidatos");
-const Vaga = require("./vaga");
 const VagaRemota = require("./VagaRemota");
 const VagaPresencial = require("./VagaPresencial");
 const vagasRemotas = require("./database/bd_vagas_remotas");
 const vagasPresenciais = require("./database/bd_vagas_presenciais");
 
-//-----------------------
+//-----------------------------------------------------------------------
+// BUSCA DOS DADOS
+//-----------------------------------------------------------------------
 
 function buscarCandidatos() {
   return new Promise((resolve, reject) => {
@@ -105,19 +106,35 @@ async function main() {
         ),
     );
 
-    console.log(`\n\n======== Candidatos (${listaCandidatos.length}) ========\n`);
+    //-----------------------
+
+    //Mostrando todos os candidatos disponíveis
+    console.log(`\n\n...................... Candidatos (${listaCandidatos.length}) ......................\n`);
     listaCandidatos.forEach((candidato) => {
       candidato.mostrarCandidato();
     });
 
-    console.log(`\n======== Vagas (${vagasRemotas.length + vagasPresenciais.length}) ========\n`);
+    //-----------------------
 
-    listaVagasRemotas.forEach((vagaRemota) => {
-      vagaRemota.mostrarVaga();
+    //Concatenei as vagas presenciais com as remotas, assim tenho um array único de vagas
+    const listaVagas = listaVagasPresenciais.concat(listaVagasRemotas);
+
+    //Mostrando todas as vagas disponíveis
+    console.log(`\n...................... Vagas (${listaVagas.length}) ......................\n`);
+    listaVagas.forEach((vaga) => {
+      vaga.mostrarVaga();
     });
 
-    listaVagasPresenciais.forEach((vagaPresencial) => {
-      vagaPresencial.mostrarVaga();
+    //-----------------------
+
+    //Comparando compatibilidade
+    console.log(`\n\n...................... Calculando compatibilidade ......................\n`);
+
+    const resultadoCompatibilidade = [];
+    listaCandidatos.forEach((candidato) => {
+      listaVagas.forEach((vaga) => {
+        resultadoCompatibilidade.push(vaga.compararCompatibilidade(candidato));
+      });
     });
   } catch (e) {
     console.log("erro\n" + e);
