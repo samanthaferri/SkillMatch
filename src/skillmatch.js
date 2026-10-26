@@ -57,7 +57,7 @@ function bucarVagasPresenciais() {
 }
 
 //-----------------------------------------------------------------------
-// ANÁLISE DE COMPATIBILIDADE (FOR E CALLBACK)
+// ANÁLISE DE COMPATIBILIDADE
 //-----------------------------------------------------------------------
 
 // Comparar cada candidato com todas as vagas
@@ -71,6 +71,26 @@ function analisarCompatibilidades(candidatos, vagas, aoComparar) {
       aoComparar(resultado); //callback
     }
   }
+}
+
+//-----------------------------------------------------------------------
+// CONTADOR DE COMPARAÇÕES
+//-----------------------------------------------------------------------
+
+// Criar um contador que mantém o total de comparações
+function criarContadorComparacoes() {
+  let total = 0;
+
+  return {
+    // Registrar uma nova comparação
+    registrar() {
+      total++;
+    },
+    // Consultar quantas comparações foram realizadas
+    consultar() {
+      return total;
+    },
+  };
 }
 
 //-----------------------------------------------------------------------
@@ -154,10 +174,19 @@ async function main() {
     // Comparar cada candidato com todas as vagas e guardar os resultados em um array
     const resultadoCompatibilidade = [];
 
+    // Criar um contador para registrar as comparações realizadas
+    const contadorComparacoes = criarContadorComparacoes();
+
     // Realizar as comparações utilizando a função com callback
     analisarCompatibilidades(listaCandidatos, listaVagas, (resultado) => {
       resultadoCompatibilidade.push(resultado);
+
+      // Registrar uma comparação realizada (closure)
+      contadorComparacoes.registrar();
     });
+
+    // Mostrar a quantidade total de comparações realizadas
+    console.log(`\n📊 Total de comparações realizadas: ${contadorComparacoes.consultar()}`);
 
     //-----------------------------------------------------------------------
     // ENCONTRAR AS VAGAS MAIS COMPATÍVEIS (RF06)
