@@ -172,16 +172,19 @@ async function main() {
         return resultado.candidato === candidato && typeof resultado.compatibilidade.percentual === "number";
       });
 
-      // Percorrer os resultados e guardar o maior percentual encontrado
+      // Procurar a maior compatibilidade até encontrar 100% ou terminar a lista
       let maiorPercentual = 0;
+      let indice = 0;
 
-      resultadosCandidato.forEach((resultado) => {
-        const percentual = resultado.compatibilidade.percentual;
+      while (indice < resultadosCandidato.length && maiorPercentual < 100) {
+        const percentual = resultadosCandidato[indice].compatibilidade.percentual;
 
         if (percentual > maiorPercentual) {
           maiorPercentual = percentual;
         }
-      });
+
+        indice++;
+      }
 
       // Encontrar todas as vagas com o maior percentual, incluindo possíveis empates
       const melhoresVagas = resultadosCandidato.filter((resultado) => {
