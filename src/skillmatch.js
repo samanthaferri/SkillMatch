@@ -57,6 +57,23 @@ function bucarVagasPresenciais() {
 }
 
 //-----------------------------------------------------------------------
+// ANÁLISE DE COMPATIBILIDADE (FOR E CALLBACK)
+//-----------------------------------------------------------------------
+
+// Comparar cada candidato com todas as vagas
+function analisarCompatibilidades(candidatos, vagas, aoComparar) {
+  // Percorrer a lista de candidatos
+  for (let i = 0; i < candidatos.length; i++) {
+    // Percorrer todas as vagas para cada candidato
+    for (let j = 0; j < vagas.length; j++) {
+      const resultado = vagas[j].compararCompatibilidade(candidatos[i]);
+
+      aoComparar(resultado); //callback
+    }
+  }
+}
+
+//-----------------------------------------------------------------------
 // EXECUÇÃO PRINCIPAL
 //-----------------------------------------------------------------------
 
@@ -137,10 +154,9 @@ async function main() {
     // Comparar cada candidato com todas as vagas e guardar os resultados em um array
     const resultadoCompatibilidade = [];
 
-    listaCandidatos.forEach((candidato) => {
-      listaVagas.forEach((vaga) => {
-        resultadoCompatibilidade.push(vaga.compararCompatibilidade(candidato));
-      });
+    // Realizar as comparações utilizando a função com callback
+    analisarCompatibilidades(listaCandidatos, listaVagas, (resultado) => {
+      resultadoCompatibilidade.push(resultado);
     });
 
     //-----------------------------------------------------------------------
