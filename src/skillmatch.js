@@ -113,7 +113,11 @@ async function main() {
     );
 
     // Buscar as vagas remotas e criar os objetos da classe VagaRemota
-    const vagasRemotasResponse = await bucarVagasRemotas();
+    const vagasRemotasResponse = await bucarVagasRemotas().catch((erro) => {
+      console.log(`⚠️ ${erro}`);
+      return [];
+    });
+
     const listaVagasRemotas = vagasRemotasResponse.map(
       (remotasObj) =>
         new VagaRemota(
@@ -129,7 +133,11 @@ async function main() {
     );
 
     // Buscar as vagas presenciais e criar os objetos da classe VagaPresencial
-    const vagasPresenciaisResponse = await bucarVagasPresenciais();
+    const vagasPresenciaisResponse = await bucarVagasPresenciais().catch((erro) => {
+      console.log(`⚠️ ${erro}`);
+      return [];
+    });
+
     const listaVagasPresenciais = vagasPresenciaisResponse.map(
       (presenciaisObj) =>
         new VagaPresencial(
